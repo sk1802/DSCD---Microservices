@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+message Void {}
+
+service Seller {
+  rpc Seller_Notification(NotifyClientRequest) returns (Void);
+}
+
+message NotifyClientRequest {
+    string message = 1;
+}

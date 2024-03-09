@@ -1,0 +1,105 @@
+syntax = "proto3";
+
+//package shopping_platform;
+
+message Status {
+  bool success = 1;
+  string message = 2;
+}
+
+message Item {
+  enum Category {
+    ELECTRONICS = 0;
+    FASHION = 1;
+    OTHERS = 2;
+  }
+  string id = 1;
+  double price = 2;
+  string name = 3;
+  Category category = 4;
+  string description = 5;
+  int32 quantityRemaining = 6;
+  double rating = 7;
+  string sellerAddress = 8;
+}
+
+message Items {
+  repeated Item items = 1;
+}
+
+service Market {
+  rpc RegisterSeller(RegisterSellerRequest) returns (Status);
+  rpc SellItem(SellItemRequest) returns (Status);
+  rpc UpdateItem(UpdateItemRequest) returns (Status);
+  rpc DeleteItem(DeleteItemRequest) returns (Status);
+  rpc DisplaySellerItems(DisplaySellerItemsRequest) returns (Items);
+
+  rpc SearchItem(SearchItemRequest) returns (Items);
+  rpc BuyItem(BuyItemRequest) returns (Status);
+  rpc AddToWishList(AddToWishListRequest) returns (Status);
+  rpc RateItem(RateItemRequest) returns (Status);
+}
+
+message RegisterSellerRequest {
+  string sellerAddress = 1;
+  string uuid = 2;
+}
+
+message SellItemRequest {
+  string productName = 1;
+  Item.Category category = 2;
+  int32 quantity = 3;
+  string description = 4;
+  string sellerAddress = 5;
+  double pricePerUnit = 6;
+  string sellerUuid = 7;
+}
+
+message UpdateItemRequest {
+  int32 itemId = 1;
+  double newPrice = 2;
+  int32 newQuantity = 3;
+  string sellerAddress = 4;
+  string sellerUuid = 5;
+}
+
+message DeleteItemRequest {
+  int32 itemId = 1;
+  string sellerAddress = 2;
+  string sellerUuid = 3;
+}
+
+message DisplaySellerItemsRequest {
+  string sellerAddress = 1;
+  string sellerUuid = 2;
+}
+
+message SearchItemRequest {
+  string itemName = 1;
+  Item.Category category = 2;
+}
+
+message BuyItemRequest {
+  string buyerAddress = 1;
+  int32 itemId = 2;
+  int32 quantityToBuy = 3;
+}
+
+message AddToWishListRequest {
+  string buyerAddress = 1;
+  int32 itemId = 2;
+}
+
+message RateItemRequest {
+  string buyerAddress = 1;
+  int32 itemId = 2;
+  int32 rating = 3;
+}
+
+// message NotifyClientRequest {
+//   Item updatedItem = 1;
+// }
+
+// service NotifyClient {
+//   rpc Notify(NotifyClientRequest) returns (Status);
+// }

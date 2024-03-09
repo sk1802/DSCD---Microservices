@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+//package shopping_platform;
+
+message Void1 {}
+
+service Buyer {
+  rpc Buyer_Notification(Notifybuyer) returns (Void1);
+}
+
+message Notifybuyer {
+  string message = 1;
+}
